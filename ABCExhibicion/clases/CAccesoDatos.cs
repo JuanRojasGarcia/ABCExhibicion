@@ -497,9 +497,9 @@ namespace ABCExhibicion
                         datosArticulo = new CArticulo();
                         datosArticulo.sArticuloNom = reader[1].ToString();
                         datosArticulo.sMarca = reader[2].ToString();
-                        datosArticulo.sModelo = reader[1].ToString();
-                        datosArticulo.dPrecio = Convert.ToDecimal( reader[2].ToString());
-                        datosArticulo.iExistencia = Convert.ToInt32( reader[2].ToString());
+                        datosArticulo.sModelo = reader[3].ToString();
+                        datosArticulo.dPrecio = Convert.ToDecimal( reader[4].ToString());
+                        datosArticulo.iExistencia = Convert.ToInt32( reader[5].ToString());
                         listaArticulo.Add(datosArticulo);
                         bRegresa = true;
                     }

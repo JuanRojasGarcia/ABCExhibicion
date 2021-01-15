@@ -27,7 +27,7 @@ namespace ABCExhibicion
             dPrecio =Convert.ToDecimal( txt_Precio.Text);
             iExistencia = Convert.ToInt32( txt_Stock.Text);
 
-            bRegresa = CAccesoDatos.GrabarArticulo(iArticuloid, sArticuloNom,sMarca , sModelo, dPrecio,iExistencia);
+            bRegresa = CAccesoDatos.GrabarArticulo(iArticuloid, sArticuloNom, sModelo, sMarca, dPrecio,iExistencia);
             
             return bRegresa;
         }
@@ -50,7 +50,7 @@ namespace ABCExhibicion
             iExistencia = Convert.ToInt32( txt_Stock.Text);
 
 
-            bRegresa = CAccesoDatos.ModificarArticulo(iArticuloid, sArticuloNom,sMarca , sModelo, dPrecio,iExistencia);
+            bRegresa = CAccesoDatos.ModificarArticulo(iArticuloid, sArticuloNom, sModelo, sMarca, dPrecio, iExistencia);
             if(bRegresa){
                 btn_ModificarClick = true;
                 fLimpiarCampos();
