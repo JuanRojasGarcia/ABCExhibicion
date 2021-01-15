@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="articulo\CGridArticulo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="articulo\CValidacionesArticulo.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="cliente\CGridCliente.cs">
       <SubType>Form</SubType>
     </Compile>

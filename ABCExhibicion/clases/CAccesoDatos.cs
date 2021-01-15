@@ -383,7 +383,7 @@ namespace ABCExhibicion
                    
                     if (reader.Read())
                     {
-                        if (Convert.ToInt32(reader["Error"]) == 1)
+                        if (Convert.ToInt32(reader["Messagge"]) == 1)
                         {
                             bRegresa = false;
                             MessageBox.Show("Codigo Existente");
@@ -411,7 +411,7 @@ namespace ABCExhibicion
         }
 
 
-        public static bool ModificarArticulo(int iLocacionid, string sMunicipio, string sLocacion){
+        public static bool ModificarArticulo(int iArticuloid, string sArticuloNom, string sModelo, string sMarca, decimal dPrecio, int iExistencia){
             bool bRegresa = true;
             string sComandoSQL = "";
             OdbcConnection odbcSQL = new OdbcConnection();
@@ -419,7 +419,7 @@ namespace ABCExhibicion
             if(abreconexionSql(odbcSQL)){
                 try
                 {
-                    sComandoSQL = string.Format("EXECUTE ComprasMuebles.dbo.proc_abclocaciones {0}, '{1}', '{2}', 2", iLocacionid, sMunicipio,sLocacion);
+                    sComandoSQL = string.Format("EXECUTE ComprasMuebles.dbo.proc_abcarticulos {0}, '{1}', '{2}', '{3}', {4}, {5}, 2", iArticuloid, sArticuloNom,sModelo, sMarca, dPrecio, iExistencia);
 
                     if (!ejecutaQuery(odbcSQL, sComandoSQL)){
                     
@@ -442,7 +442,7 @@ namespace ABCExhibicion
 
         }
 
-        public static bool EliminarArticulo(int iLocacionid){
+        public static bool EliminarArticulo(int iArticuloid){
             bool bRegresa = true;
             string sComandoSQL = "";
             OdbcConnection odbcSQL = new OdbcConnection();
@@ -450,7 +450,7 @@ namespace ABCExhibicion
             if(abreconexionSql(odbcSQL)){
                 try
                 {
-                    sComandoSQL = string.Format("EXECUTE ComprasMuebles.dbo.proc_abclocaciones {0},'','',3", iLocacionid);             
+                    sComandoSQL = string.Format("EXECUTE ComprasMuebles.dbo.proc_abcarticulos {0}, '', '', '', 0, 0, 3", iArticuloid);
                    
                     if (!ejecutaQuery(odbcSQL, sComandoSQL)){
                     
@@ -473,31 +473,34 @@ namespace ABCExhibicion
 
         }
 
-        public static bool BuscarArticulo(string sLocacionid, ref List<CLocacion> listadoLocacion){
+        public static bool BuscarArticulo(string sArticuloid, ref List<CArticulo> listaArticulo){
             bool bRegresa = false;
             string sComandoSQL = "";
-            int iLocacionid = 0;
+            int iArticuloid = 0;
             OdbcConnection odbcSQL = new OdbcConnection();
             OdbcDataReader reader;
-            CLocacion datosLocacion = new CLocacion();
+            CArticulo datosArticulo = new CArticulo();
 
-            if(!string.IsNullOrEmpty(sLocacionid)){
-                iLocacionid = Convert.ToInt32(sLocacionid);
+            if(!string.IsNullOrEmpty(sArticuloid)){
+                iArticuloid = Convert.ToInt32(sArticuloid);
             }
 
 
             if(abreconexionSql(odbcSQL)){
                 try
                 {
-                    sComandoSQL = string.Format("EXECUTE ComprasMuebles.dbo.proc_abclocaciones {0},'', '', 4", iLocacionid);             
+                    sComandoSQL = string.Format("EXECUTE ComprasMuebles.dbo.proc_abcarticulos {0}, '', '', '', 0, 0, 4", iArticuloid);
                    
                     reader = ejecutarconsulta(sComandoSQL,odbcSQL);
 
                     while (reader.Read()){
-                        datosLocacion = new CLocacion();
-                        datosLocacion.sMunicipio = reader[1].ToString();
-                        datosLocacion.sLocacion = reader[2].ToString();
-                        listadoLocacion.Add(datosLocacion);
+                        datosArticulo = new CArticulo();
+                        datosArticulo.sArticuloNom = reader[1].ToString();
+                        datosArticulo.sMarca = reader[2].ToString();
+                        datosArticulo.sModelo = reader[1].ToString();
+                        datosArticulo.dPrecio = Convert.ToDecimal( reader[2].ToString());
+                        datosArticulo.iExistencia = Convert.ToInt32( reader[2].ToString());
+                        listaArticulo.Add(datosArticulo);
                         bRegresa = true;
                     }
 

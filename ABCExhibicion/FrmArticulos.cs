@@ -25,32 +25,36 @@ namespace ABCExhibicion
         public bool btn_EliminarClick = false;
         public bool btn_ConsultarClick = false;
 
-        public void fMostrarArticulos()
-        {
-            con.Open();
-            DataTable dt = new DataTable();
-            cmd = new SqlCommand("proc_abcarticulos", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@iArticuloid", 0);
-            cmd.Parameters.AddWithValue("@cArticuloNom", "");
-            cmd.Parameters.AddWithValue("@cArticuloModelo", "");
-            cmd.Parameters.AddWithValue("@cArticuloMarca", "");
-            cmd.Parameters.AddWithValue("@dArticuloPrecio", 0);
-            cmd.Parameters.AddWithValue("@iArticuloExistencia", 0);
-            cmd.Parameters.AddWithValue("@iOpcion", 5);
-            cmd.ExecuteNonQuery();
-            adapt = new SqlDataAdapter(cmd);
-            adapt.Fill(dt);
-            dgvArticulos.DataSource = dt;
-            cmd.Parameters.Clear();
-            con.Close();
-        }
+
 
         public FrmArticulos()
         {
             InitializeComponent();
             fMostrarArticulos();
             fConfiguracionControles();          
+        }
+
+        public void fMostrarArticulos()
+        {
+            // con.Open();
+            // DataTable dt = new DataTable();
+            // cmd = new SqlCommand("proc_abcarticulos", con);
+            // cmd.CommandType = CommandType.StoredProcedure;
+            // cmd.Parameters.AddWithValue("@iArticuloid", 0);
+            // cmd.Parameters.AddWithValue("@cArticuloNom", "");
+            // cmd.Parameters.AddWithValue("@cArticuloModelo", "");
+            // cmd.Parameters.AddWithValue("@cArticuloMarca", "");
+            // cmd.Parameters.AddWithValue("@dArticuloPrecio", 0);
+            // cmd.Parameters.AddWithValue("@iArticuloExistencia", 0);
+            // cmd.Parameters.AddWithValue("@iOpcion", 5);
+            // cmd.ExecuteNonQuery();
+            // adapt = new SqlDataAdapter(cmd);
+            // adapt.Fill(dt);
+            // dgvArticulos.DataSource = dt;
+            // cmd.Parameters.Clear();
+            // con.Close();
+            fCrearGridArticulo();
+            fLlenarGridArticulo();
         }
 
         private void FrmArticulos_Load(object sender, EventArgs e)
@@ -60,148 +64,205 @@ namespace ABCExhibicion
 
         private void btn_Agregar_Click(object sender, EventArgs e)
         {            
-            if (txt_iduarticulo.Text != "" && txt_nombre.Text != ""  && txt_Modelo.Text != "" &&  txt_Marca.Text != "" && txt_Precio.Text != "" && txt_Stock.Text != "")
-                {
-                                                
-                    con.Open();
-                    cmd = new SqlCommand("proc_abcarticulos", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@iArticuloid", txt_iduarticulo.Text);           
-                    cmd.Parameters.AddWithValue("@cArticuloNom", txt_nombre.Text);
-                    cmd.Parameters.AddWithValue("@cArticuloModelo", txt_Modelo.Text);
-                    cmd.Parameters.AddWithValue("@cArticuloMarca", txt_Marca.Text);
-                    cmd.Parameters.AddWithValue("@dArticuloPrecio", txt_Precio.Text);
-                    cmd.Parameters.AddWithValue("@iArticuloExistencia", txt_Stock.Text);
-                    cmd.Parameters.AddWithValue("@iOpcion", 1);
-                    
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    reader.Read();
-                        if(Convert.ToInt32(reader["Messagge"]) == 1){
-                            MessageBox.Show("Codigo Articulo Existente");
-                            con.Close();
-                        }else{
-                            cmd.Parameters.Clear();
-                            con.Close();
+            if(txt_iduarticulo.Text != "" && txt_nombre.Text != "" && txt_Marca.Text != "" && txt_Modelo.Text != "" && txt_nombre.Text != "" && txt_Stock.Text != ""){
+                bool bRegresa = false;
+                // bool bRegresaNum = true;
 
-                            btn_AgregarClick = true;
+                // bRegresaNum = ValidarNumeroCentro();
+
+                // if(bRegresaNum){
+                //    bRegresa = validarGrabar();
+                // }
+                bRegresa = validarGrabar();
+                if(bRegresa){
+                    //btn_AgregarClick = true;
+                    fLimpiarCampos();
+                    fLimpiarCampos();
+                    fLlenarGridArticulo(); 
+                }
+            }else{
+                MessageBox.Show("Ingresa Todos Los Datos", "ABCExhibicion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            // if (txt_iduarticulo.Text != "" && txt_nombre.Text != ""  && txt_Modelo.Text != "" &&  txt_Marca.Text != "" && txt_Precio.Text != "" && txt_Stock.Text != "")
+            //     {
+                                                
+            //         con.Open();
+            //         cmd = new SqlCommand("proc_abcarticulos", con);
+            //         cmd.CommandType = CommandType.StoredProcedure;
+            //         cmd.Parameters.AddWithValue("@iArticuloid", txt_iduarticulo.Text);           
+            //         cmd.Parameters.AddWithValue("@cArticuloNom", txt_nombre.Text);
+            //         cmd.Parameters.AddWithValue("@cArticuloModelo", txt_Modelo.Text);
+            //         cmd.Parameters.AddWithValue("@cArticuloMarca", txt_Marca.Text);
+            //         cmd.Parameters.AddWithValue("@dArticuloPrecio", txt_Precio.Text);
+            //         cmd.Parameters.AddWithValue("@iArticuloExistencia", txt_Stock.Text);
+            //         cmd.Parameters.AddWithValue("@iOpcion", 1);
+                    
+            //         SqlDataReader reader = cmd.ExecuteReader();
+            //         reader.Read();
+            //             if(Convert.ToInt32(reader["Messagge"]) == 1){
+            //                 MessageBox.Show("Codigo Articulo Existente");
+            //                 con.Close();
+            //             }else{
+            //                 cmd.Parameters.Clear();
+            //                 con.Close();
+
+            //                 btn_AgregarClick = true;
                 
-                            fLimpiarCamposArticulos();
-                            fMostrarArticulos();  
-                        }                            
+            //                 fLimpiarCamposArticulos();
+            //                 fMostrarArticulos();  
+            //             }                            
                             
-                }
-                else {
-                    MessageBox.Show("Ingrese todos los atributos");
-                }
+            //     }
+            //     else {
+            //         MessageBox.Show("Ingrese todos los atributos");
+            //     }
 
                        
         }
 
         private void btn_Modificar_Click(object sender, EventArgs e)
-        {            
+        {        
+            string sArticuloid = "";
+            sArticuloid = txt_iduarticulo.Text;
+            
+            if(!string.IsNullOrEmpty(sArticuloid)){
+                validarModificar();
+                fLimpiarCampos();
+                fLlenarGridArticulo(); 
+            }else{
+                MessageBox.Show("Captura Numero de Centro", "ABCExhibicion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txt_iduarticulo.Focus();
+            }    
 
-            if (txt_iduarticulo.Text != "")
-            {
-                con.Open();
-                cmd = new SqlCommand("proc_abcarticulos", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@iArticuloid", txt_iduarticulo.Text);
-                cmd.Parameters.AddWithValue("@cArticuloNom", txt_nombre.Text);
-                cmd.Parameters.AddWithValue("@cArticuloModelo", txt_Modelo.Text);
-                cmd.Parameters.AddWithValue("@cArticuloMarca", txt_Marca.Text);
-                cmd.Parameters.AddWithValue("@dArticuloPrecio", txt_Precio.Text);
-                cmd.Parameters.AddWithValue("@iArticuloExistencia", txt_Stock.Text);
-                cmd.Parameters.AddWithValue("@iOpcion", 2);
-                cmd.ExecuteNonQuery();
-                cmd.Parameters.Clear();
-                con.Close();
+            // if (txt_iduarticulo.Text != "")
+            // {
+            //     con.Open();
+            //     cmd = new SqlCommand("proc_abcarticulos", con);
+            //     cmd.CommandType = CommandType.StoredProcedure;
+            //     cmd.Parameters.AddWithValue("@iArticuloid", txt_iduarticulo.Text);
+            //     cmd.Parameters.AddWithValue("@cArticuloNom", txt_nombre.Text);
+            //     cmd.Parameters.AddWithValue("@cArticuloModelo", txt_Modelo.Text);
+            //     cmd.Parameters.AddWithValue("@cArticuloMarca", txt_Marca.Text);
+            //     cmd.Parameters.AddWithValue("@dArticuloPrecio", txt_Precio.Text);
+            //     cmd.Parameters.AddWithValue("@iArticuloExistencia", txt_Stock.Text);
+            //     cmd.Parameters.AddWithValue("@iOpcion", 2);
+            //     cmd.ExecuteNonQuery();
+            //     cmd.Parameters.Clear();
+            //     con.Close();
 
-                btn_ModificarClick = true;
+            //     btn_ModificarClick = true;
 
-                fLimpiarCamposArticulos();
-                fMostrarArticulos();
-                fAtributosModificarEliminar();
-            }
-            else
-            {
-                MessageBox.Show("Ingrese el Codigo del Articulo");
-            }
+            //     fLimpiarCamposArticulos();
+            //     fMostrarArticulos();
+            //     fAtributosModificarEliminar();
+            // }
+            // else
+            // {
+            //     MessageBox.Show("Ingrese el Codigo del Articulo");
+            // }
         }
 
         private void btn_Eliminar_Click(object sender, EventArgs e)
         {
-            if (txt_iduarticulo.Text != "")
-            {
-                con.Open();
-                cmd = new SqlCommand("proc_abcarticulos", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@iArticuloid", txt_iduarticulo.Text);
-                cmd.Parameters.AddWithValue("@cArticuloNom", "");
-                cmd.Parameters.AddWithValue("@cArticuloModelo", "");
-                cmd.Parameters.AddWithValue("@cArticuloMarca", "");
-                cmd.Parameters.AddWithValue("@dArticuloPrecio", 0);
-                cmd.Parameters.AddWithValue("@iArticuloExistencia", 0);
-                cmd.Parameters.AddWithValue("@iOpcion", 3);
-                cmd.ExecuteNonQuery();
-                cmd.Parameters.Clear();
-                con.Close();
-
-                btn_EliminarClick = true;
-
-                fLimpiarCamposArticulos();
-                fMostrarArticulos();
-                fAtributosModificarEliminar();
+            bool bRegresa = false;
+            string sArticuloid = "";
+            sArticuloid = txt_iduarticulo.Text;
+            
+            if(!string.IsNullOrEmpty(sArticuloid)){
+                bRegresa = validarEliminar();
+                
+            }else{
+                MessageBox.Show("Captura Numero de Locacion", "ABCExhibicion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txt_iduarticulo.Focus();
             }
-            else
-            {
-                MessageBox.Show("Ingrese el Codigo del Articulo");
+
+            if(bRegresa){
+                fLimpiarCampos();
+                fLimpiarCampos();
+                fLlenarGridArticulo(); 
             }
+            // if (txt_iduarticulo.Text != "")
+            // {
+            //     con.Open();
+            //     cmd = new SqlCommand("proc_abcarticulos", con);
+            //     cmd.CommandType = CommandType.StoredProcedure;
+            //     cmd.Parameters.AddWithValue("@iArticuloid", txt_iduarticulo.Text);
+            //     cmd.Parameters.AddWithValue("@cArticuloNom", "");
+            //     cmd.Parameters.AddWithValue("@cArticuloModelo", "");
+            //     cmd.Parameters.AddWithValue("@cArticuloMarca", "");
+            //     cmd.Parameters.AddWithValue("@dArticuloPrecio", 0);
+            //     cmd.Parameters.AddWithValue("@iArticuloExistencia", 0);
+            //     cmd.Parameters.AddWithValue("@iOpcion", 3);
+            //     cmd.ExecuteNonQuery();
+            //     cmd.Parameters.Clear();
+            //     con.Close();
+
+            //     btn_EliminarClick = true;
+
+            //     fLimpiarCamposArticulos();
+            //     fMostrarArticulos();
+            //     fAtributosModificarEliminar();
+            // }
+            // else
+            // {
+            //     MessageBox.Show("Ingrese el Codigo del Articulo");
+            // }
         }
 
         private void btn_Consultar_Click(object sender, EventArgs e)
         {
+            bool bRegresa = false;
+            List<CArticulo> listaArticulo = new List<CArticulo>();
+            bRegresa = validarBuscar(ref listaArticulo);
 
-            if (txt_iduarticulo.Text != "") {
+            if(bRegresa){
+                txt_nombre.Text = listaArticulo[0].sArticuloNom;
+                txt_Marca.Text = listaArticulo[0].sMarca;
+                txt_Modelo.Text = listaArticulo[0].sModelo;
+                txt_Precio.Text =  listaArticulo[0].dPrecio.ToString();
+                txt_Stock.Text = listaArticulo[0].iExistencia.ToString();
+            }
+            // if (txt_iduarticulo.Text != "") {
 
-                con.Open();
-                cmd = new SqlCommand("proc_abcarticulos", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@iArticuloid", txt_iduarticulo.Text);
-                cmd.Parameters.AddWithValue("@cArticuloNom", "");
-                cmd.Parameters.AddWithValue("@cArticuloModelo", "");
-                cmd.Parameters.AddWithValue("@cArticuloMarca", "");
-                cmd.Parameters.AddWithValue("@dArticuloPrecio", 0);
-                cmd.Parameters.AddWithValue("@iArticuloExistencia", 0);
-                cmd.Parameters.AddWithValue("@iOpcion", 4);
+            //     con.Open();
+            //     cmd = new SqlCommand("proc_abcarticulos", con);
+            //     cmd.CommandType = CommandType.StoredProcedure;
+            //     cmd.Parameters.AddWithValue("@iArticuloid", txt_iduarticulo.Text);
+            //     cmd.Parameters.AddWithValue("@cArticuloNom", "");
+            //     cmd.Parameters.AddWithValue("@cArticuloModelo", "");
+            //     cmd.Parameters.AddWithValue("@cArticuloMarca", "");
+            //     cmd.Parameters.AddWithValue("@dArticuloPrecio", 0);
+            //     cmd.Parameters.AddWithValue("@iArticuloExistencia", 0);
+            //     cmd.Parameters.AddWithValue("@iOpcion", 4);
 
-                    SqlDataReader reader = cmd.ExecuteReader();
+            //         SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read())
-                    {
-                        txt_nombre.Text = reader[1].ToString();
-                        txt_Modelo.Text = reader[2].ToString();
-                        txt_Marca.Text = reader[3].ToString();
-                        txt_Precio.Text = reader[4].ToString();
-                        txt_Stock.Text = reader[5].ToString();
+            //         if (reader.Read())
+            //         {
+            //             txt_nombre.Text = reader[1].ToString();
+            //             txt_Modelo.Text = reader[2].ToString();
+            //             txt_Marca.Text = reader[3].ToString();
+            //             txt_Precio.Text = reader[4].ToString();
+            //             txt_Stock.Text = reader[5].ToString();
 
-                        cmd.Parameters.Clear();
-                        con.Close();
+            //             cmd.Parameters.Clear();
+            //             con.Close();
 
-                        btn_ConsultarClick = true;
+            //             btn_ConsultarClick = true;
  
-                    }else {
-                        MessageBox.Show("Codigo Articulo no Existe");
-                        btn_ConsultarClick = false;
+            //         }else {
+            //             MessageBox.Show("Codigo Articulo no Existe");
+            //             btn_ConsultarClick = false;
                         
-                    }
-                    con.Close();
+            //         }
+            //         con.Close();
                 
                    
-            }else{
-                MessageBox.Show("Ingrese el Codigo del Articulo");
-            }
+            // }else{
+            //     MessageBox.Show("Ingrese el Codigo del Articulo");
+            // }
 
-            fAtributosConsultar();
+            // fAtributosConsultar();
         }
 
         #region Funciones Para Modificar Los Atributos de Los Controles
@@ -297,7 +358,7 @@ namespace ABCExhibicion
                 rdb_Eliminar.Checked = false;
                 rdb_Modificar.Checked = false;
 
-                fLimpiarCamposArticulos();
+                fLimpiarCampos();
 
             }
 
@@ -319,7 +380,7 @@ namespace ABCExhibicion
                 rdb_Agregar.Checked = false;
                 rdb_Eliminar.Checked = false;
 
-                fLimpiarCamposArticulos();
+                fLimpiarCampos();
             }
 
             if (rdb_Eliminar.Checked == true) {
@@ -340,13 +401,13 @@ namespace ABCExhibicion
                 rdb_Agregar.Checked = false;
                 rdb_Modificar.Checked = false;
 
-                fLimpiarCamposArticulos();
+                fLimpiarCampos();
             }
         }
 
         #endregion
 
-        public void fLimpiarCamposArticulos()
+        public void fLimpiarCampos()
         {
             txt_iduarticulo.Text = "";
             txt_Marca.Text = "";
@@ -374,29 +435,33 @@ namespace ABCExhibicion
 
         private void txt_precio_TextChanged(object sender, EventArgs e)
         {
-            if (!System.Text.RegularExpressions.Regex.IsMatch(txt_Precio.Text, @"^\d{1,14}(?:\.\d{0,2}){0,1}$"))
-            {
-                txt_Precio.Text = string.Empty;
-            }
+            // if (!System.Text.RegularExpressions.Regex.IsMatch(txt_Precio.Text, @"^\d{1,14}(?:\.\d{0,2}){0,1}$"))
+            // {
+            //     txt_Precio.Text = string.Empty;
+            // }
+
+            txt_Precio.Text = CValidacionesGenerales.ValidarNumero(txt_Precio.Text, txt_Precio);
         }
 
 
         private void txt_iduarticulo_TextChanged(object sender, EventArgs e)
         {
-            if (System.Text.RegularExpressions.Regex.IsMatch(txt_iduarticulo.Text, "[^0-9]"))
-            {
-                MessageBox.Show("Solo Numeros");
-                txt_iduarticulo.Text = string.Empty;
-            }
+            // if (System.Text.RegularExpressions.Regex.IsMatch(txt_iduarticulo.Text, "[^0-9]"))
+            // {
+            //     MessageBox.Show("Solo Numeros");
+            //     txt_iduarticulo.Text = string.Empty;
+            // }
+            txt_iduarticulo.Text = CValidacionesGenerales.ValidarNumero(txt_iduarticulo.Text, txt_iduarticulo);
         }
 
         private void txt_Stock_TextChanged(object sender, EventArgs e)
         {
-            if (System.Text.RegularExpressions.Regex.IsMatch(txt_Stock.Text, "[^0-9]"))
-            {
-                MessageBox.Show("Solo Numeros");
-                txt_Stock.Text = string.Empty;
-            }
+            // if (System.Text.RegularExpressions.Regex.IsMatch(txt_Stock.Text, "[^0-9]"))
+            // {
+            //     MessageBox.Show("Solo Numeros");
+            //     txt_Stock.Text = string.Empty;
+            // }
+            txt_Stock.Text = CValidacionesGenerales.ValidarNumero(txt_Stock.Text, txt_Stock);
         }
 
         private void btn_ArticulosRegresar_Click(object sender, EventArgs e)

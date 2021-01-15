@@ -19,4 +19,12 @@ namespace ABCExhibicion
         public string sLocalidad = " ";
         public string sClienteNom = " ";
     }
+
+    public class CArticulo{
+        public string sArticuloNom = " ";
+        public string sModelo = " ";
+        public string sMarca = " ";
+        public decimal dPrecio = 0;
+        public int iExistencia = 0;
+    }
 }
