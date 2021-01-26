@@ -34,7 +34,7 @@
             this.lbl_Precio = new System.Windows.Forms.Label();
             this.txt_Marca = new System.Windows.Forms.TextBox();
             this.lbl_Articulos = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvArticulos = new System.Windows.Forms.DataGridView();
             this.btn_Eliminar = new System.Windows.Forms.Button();
             this.btn_Modificar = new System.Windows.Forms.Button();
             this.btn_Agregar = new System.Windows.Forms.Button();
@@ -50,7 +50,7 @@
             this.rdb_Modificar = new System.Windows.Forms.RadioButton();
             this.rdb_Eliminar = new System.Windows.Forms.RadioButton();
             this.btn_ArticulosRegresar = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
             this.SuspendLayout();
             // 
             // txt_Stock
@@ -93,7 +93,7 @@
             this.txt_Marca.Name = "txt_Marca";
             this.txt_Marca.Size = new System.Drawing.Size(122, 20);
             this.txt_Marca.TabIndex = 23;
-
+            this.txt_Marca.TextChanged += new System.EventHandler(this.txt_Marca_TextChanged);
             // 
             // lbl_Articulos
             // 
@@ -104,15 +104,16 @@
             this.lbl_Articulos.TabIndex = 22;
             this.lbl_Articulos.Text = "ARTICULOS";
             // 
-            // dataGridView1
+            // dgvArticulos
             // 
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(31, 246);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(643, 231);
-            this.dataGridView1.TabIndex = 21;
+            this.dgvArticulos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvArticulos.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
+            this.dgvArticulos.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvArticulos.Location = new System.Drawing.Point(31, 246);
+            this.dgvArticulos.Name = "dgvArticulos";
+            this.dgvArticulos.Size = new System.Drawing.Size(643, 231);
+            this.dgvArticulos.TabIndex = 21;
             // 
             // btn_Eliminar
             // 
@@ -150,7 +151,7 @@
             this.txt_nombre.Name = "txt_nombre";
             this.txt_nombre.Size = new System.Drawing.Size(122, 20);
             this.txt_nombre.TabIndex = 17;
-
+            this.txt_nombre.TextChanged += new System.EventHandler(this.txt_nombre_TextChanged);
             // 
             // lbl_Marca
             // 
@@ -202,7 +203,7 @@
             this.txt_Modelo.Name = "txt_Modelo";
             this.txt_Modelo.Size = new System.Drawing.Size(120, 20);
             this.txt_Modelo.TabIndex = 31;
-
+            this.txt_Modelo.TextChanged += new System.EventHandler(this.txt_Modelo_TextChanged);
             // 
             // btn_Consultar
             // 
@@ -280,7 +281,7 @@
             this.Controls.Add(this.lbl_Precio);
             this.Controls.Add(this.txt_Marca);
             this.Controls.Add(this.lbl_Articulos);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvArticulos);
             this.Controls.Add(this.btn_Eliminar);
             this.Controls.Add(this.btn_Modificar);
             this.Controls.Add(this.btn_Agregar);
@@ -290,7 +291,7 @@
             this.Name = "FrmArticulos";
             this.Text = "Articulos";
             this.Load += new System.EventHandler(this.FrmArticulos_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -304,7 +305,7 @@
         private System.Windows.Forms.Label lbl_Precio;
         private System.Windows.Forms.TextBox txt_Marca;
         private System.Windows.Forms.Label lbl_Articulos;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvArticulos;
         private System.Windows.Forms.Button btn_Eliminar;
         private System.Windows.Forms.Button btn_Modificar;
         private System.Windows.Forms.Button btn_Agregar;

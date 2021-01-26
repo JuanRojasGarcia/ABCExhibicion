@@ -15,7 +15,7 @@ namespace ABCExhibicion
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmAbcExhibicion());
+            Application.Run(new FrmVentas());
         }
     }
 }

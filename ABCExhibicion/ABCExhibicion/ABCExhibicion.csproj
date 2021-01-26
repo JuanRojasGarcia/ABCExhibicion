@@ -48,35 +48,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="articulo\CGridArticulo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="articulo\CValidacionesArticulo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="cliente\CGridCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="clases\CAccesoDatos.cs" />
+    <Compile Include="clases\CEntidades.cs" />
+    <Compile Include="cliente\CValidacionesCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="configuracion\CValidacionesConfiguracion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="locacion\CGridLocacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="locacion\CValidacionesLocacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="clases\CValidacionesGenerales.cs" />
     <Compile Include="FrmArticulos.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmArticulos.Designer.cs">
       <DependentUpon>FrmArticulos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmAbcExhibicion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmAbcExhibicion.Designer.cs">
-      <DependentUpon>FrmAbcExhibicion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmCentros.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmCentros.Designer.cs">
-      <DependentUpon>FrmCentros.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmCliente.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmCliente.Designer.cs">
-      <DependentUpon>FrmCliente.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmConfiguracion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmConfiguracion.Designer.cs">
-      <DependentUpon>FrmConfiguracion.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmVentas.cs">
       <SubType>Form</SubType>
@@ -84,30 +84,54 @@
     <Compile Include="FrmVentas.Designer.cs">
       <DependentUpon>FrmVentas.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmLocaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLocaciones.Designer.cs">
+      <DependentUpon>FrmLocaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCliente.Designer.cs">
+      <DependentUpon>FrmCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuracion.Designer.cs">
+      <DependentUpon>Configuracion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ventas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ventas.Designer.cs">
+      <DependentUpon>Ventas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FrmAbcExhibicion.resx">
-      <DependentUpon>FrmAbcExhibicion.cs</DependentUpon>
+    <EmbeddedResource Include="FrmVentas.resx">
+      <DependentUpon>FrmVentas.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmArticulos.resx">
       <DependentUpon>FrmArticulos.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmCentros.resx">
-      <DependentUpon>FrmCentros.cs</DependentUpon>
+    <EmbeddedResource Include="FrmLocaciones.resx">
+      <DependentUpon>FrmLocaciones.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCliente.resx">
       <DependentUpon>FrmCliente.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmConfiguracion.resx">
-      <DependentUpon>FrmConfiguracion.cs</DependentUpon>
+    <EmbeddedResource Include="Configuracion.resx">
+      <DependentUpon>Configuracion.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmVentas.resx">
-      <DependentUpon>FrmVentas.cs</DependentUpon>
+    <EmbeddedResource Include="Ventas.resx">
+      <DependentUpon>Ventas.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -127,6 +151,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ventas\CGridVentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ventas\CValidacionesVentas.cs">
+      <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
